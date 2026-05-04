@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import {dbConnection} from './database/db.js'
+import userRouter from './routes/user.routes.js';
 
 const app = express();
 
@@ -25,6 +26,8 @@ app.use(
         tempFileDir:"./temp/"
     })
 )
+
+app.use("/api/v1/user",userRouter);
 
 dbConnection();
 
