@@ -1,6 +1,7 @@
 import {catchAsyncError} from '../middlewares/catchAsyncError.middleware.js'
 import {User} from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
+import {generateToken} from '../utilis/jwtToken.js'
 
 
 export const signup = catchAsyncError(async(req,res,next)=>{
@@ -45,7 +46,9 @@ export const signup = catchAsyncError(async(req,res,next)=>{
         public_id:"",
         url:"",
     }
-   })
+   });
+
+    generateToken(user,"User registered successfully",201,res);
 })
 export const signin = catchAsyncError(async(req,res,next)=>{})
 export const signout = catchAsyncError(async(req,res,next)=>{})
