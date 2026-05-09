@@ -74,7 +74,27 @@ export const signin = catchAsyncError(async(req,res,next)=>{
             })
           }
           const isPasswordMatched = await bcrypt.compare(password,user.password);
+          if(!isPasswordMatched){
+             return res.status(400).json({
+                success:false,
+                message:"Incorrect password. Please try again"
+             })
+          }
+          generateToken(user,"User logged in successfully",200,res);
 })
-export const signout = catchAsyncError(async(req,res,next)=>{})
+
+
+export const signout = catchAsyncError(async(req,res,next)=>{
+    res.status(200).cookie("token","",{
+        httpOnly:true,
+        maxAge:0,
+        sameSite:"strict",
+        secure:process.env.NODE_ENV === "development" ? true : false,
+      }).json({
+        success:true,
+        message:"User logged out successfully",
+        
+      })
+})
 export const getUser = catchAsyncError(async(req,res,next)=>{})
 export const updateProfile = catchAsyncError(async(req,res,next)=>{})
