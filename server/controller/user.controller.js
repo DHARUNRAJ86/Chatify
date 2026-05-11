@@ -2,6 +2,7 @@ import {catchAsyncError} from '../middlewares/catchAsyncError.middleware.js'
 import {User} from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
 import {generateToken} from '../utilis/jwtToken.js'
+import {v2 as cloudinary} from 'cloudinary'
 
 
 export const signup = catchAsyncError(async(req,res,next)=>{
@@ -118,8 +119,11 @@ export const updateProfile = catchAsyncError(async(req,res,next)=>{
     if(avatar){
         try{
             const oldAvatarPublicId = req.user?.avatar?.public_id;
+            if(oldAvatarPublicId && oldAvatarPublicId.trim().length > 0){
+                await cloudinary.uploader.destroy(oldAvatarPublicId);  
+            }
         }catch(error){
-            data
+            
 
         }
     }
