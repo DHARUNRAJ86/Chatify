@@ -83,7 +83,6 @@ export const signin = catchAsyncError(async(req,res,next)=>{
           generateToken(user,"User logged in successfully",200,res);
 })
 
-
 export const signout = catchAsyncError(async(req,res,next)=>{
     res.status(200).cookie("token","",{
         httpOnly:true,
@@ -96,5 +95,31 @@ export const signout = catchAsyncError(async(req,res,next)=>{
         
       })
 })
-export const getUser = catchAsyncError(async(req,res,next)=>{})
-export const updateProfile = catchAsyncError(async(req,res,next)=>{})
+
+export const getUser = catchAsyncError(async(req,res,next)=>{
+    const user = await User.findById(req.user._id);
+    res.status(200).json({
+        success:true,
+        user,
+    })
+})
+
+export const updateProfile = catchAsyncError(async(req,res,next)=>{
+    const {fullName,email} = req.body;
+    if(fullName.trim().length === 0 || email.trim().length === 0){
+        return res.status(400).json({
+            success:false,
+            message:"Full name and email can't be empty."
+        })
+    }
+    const avatar = req?.files?.avatar;
+    let cloudinaryResponse  = {};
+
+    if(avatar){
+        try{
+            const oldAvatarPublicId = req.user?.avatar?.public_id;
+        }catch(error){
+
+        }
+    }
+})
