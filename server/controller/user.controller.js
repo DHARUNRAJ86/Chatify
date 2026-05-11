@@ -119,6 +119,7 @@ export const updateProfile = catchAsyncError(async(req,res,next)=>{
         try{
             const oldAvatarPublicId = req.user?.avatar?.public_id;
         }catch(error){
+            data
 
         }
     }
