@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import {User} from '../models/user.mode.js';
+import {User} from '../models/user.model.js';
 import {catchAsyncError} from './catchAsyncError.middleware.js';
 
 
@@ -11,7 +11,7 @@ export const isAuthenticated = catchAsyncError(async(req,res,next)=>{
             message:"User is not authenticated. Please sign in."
         })
     }
-    const decoded = jwt.verify(token,process.env.JWT_SECRET);
+    const decoded = jwt.verify(token,process.env.JWT_SECRET_KEY);
 
     if(!decoded){
         return res.status(500).json({
