@@ -122,9 +122,31 @@ export const updateProfile = catchAsyncError(async(req,res,next)=>{
             if(oldAvatarPublicId && oldAvatarPublicId.trim().length > 0){
                 await cloudinary.uploader.destroy(oldAvatarPublicId);  
             }
+            cloudinaryResponse = await cloudinary.uploader.upload(avatar.tempFilePath,{
+                folder:"CHAT_APP_USERS_AVATARS",
+                transformation:[
+                    {width:300,height:300,crop:"limit"},
+                    {quality:"auto"},
+                    {fetch_format:"auto"},
+                ]
+            })
         }catch(error){
-            
+            console.error("Error uploading avatar to Cloudinary:",error);
+            return res.status(500).json({
+                success:false,
+                message:"Failed to upload avatar. Please try again later."
+            });
+        }
+    }
 
+    let data ={
+        fullName,
+        email,
+    }
+    if(avatar && cloudinaryResponse.public_id && cloudinaryResponse.secure_url){
+        data.avatar ={
+            public_id:cloudinaryResponse.public_id,
+            url:cloudinaryResponse.secure_url,
         }
     }
 })
