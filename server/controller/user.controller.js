@@ -106,13 +106,17 @@ export const getUser = catchAsyncError(async(req,res,next)=>{
 })
 
 export const updateProfile = catchAsyncError(async(req,res,next)=>{
-    const {fullName,email} = req.body;
-    if(fullName.trim().length === 0 || email.trim().length === 0){
-        return res.status(400).json({
-            success:false,
-            message:"Full name and email can't be empty."
-        })
-    }
+    const { fullName, email } = req.body;
+
+const trimmedName = fullName?.trim();
+const trimmedEmail = email?.trim();
+
+if (!trimmedName || !trimmedEmail) {
+    return res.status(400).json({
+        success: false,
+        message: "Full name and email can't be empty."
+    });
+}
     const avatar = req?.files?.avatar;
     let cloudinaryResponse  = {};
 
@@ -140,8 +144,8 @@ export const updateProfile = catchAsyncError(async(req,res,next)=>{
     }
 
     let data ={
-        fullName,
-        email,
+        fullName: trimmedName,
+         email: trimmedEmail,
     }
     if(avatar && cloudinaryResponse.public_id && cloudinaryResponse.secure_url){
         data.avatar ={
@@ -149,4 +153,14 @@ export const updateProfile = catchAsyncError(async(req,res,next)=>{
             url:cloudinaryResponse.secure_url,
         }
     }
+
+    let user = await User.findByIdAndUpdate(req.user._id,data,{
+       returnDocument: "after",
+        runValidators:true,
+    })
+    res.status(200).json({
+        success:true,
+        message:"Profile updated successfully",
+        user,
+    })
 })
