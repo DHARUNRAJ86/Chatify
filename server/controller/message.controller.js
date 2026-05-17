@@ -57,7 +57,13 @@ export const sendMessage = catchAsyncError(async(req,res,next)=>{
     if(media){
         const uploadResponse = await cloudinary.uploader.upload(media.tempFilePath,{
             resource_type:"auto",
-            folder:"CHAT_APP_MEDIA"
+            folder:"CHAT_APP_MEDIA",
+            transformation:[
+                {width:1000,height:1000,crop:"limit"},
+                {quality:"auto"},
+                {fetch_format:"auto"}
+            ]
         })
+        mediaUrl = uploadResponse?.secure_url;
     }
 })
