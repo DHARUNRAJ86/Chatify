@@ -3,6 +3,7 @@ import {User} from "../models/user.model.js";
 import {Message} from "../models/message.model.js"
 import { v2 as cloudinary} from 'cloudinary'
 
+
 export const getAllUsers = catchAsyncError(async(req,res,next)=>{
     const user = req.user;
     const filteredUsers = await User.find({_id:{$ne:user._id}}).select('-password');   //ne-not exclude the current user
@@ -53,8 +54,9 @@ export const sendMessage = catchAsyncError(async(req,res,next)=>{
             message:"Cannot send empty message"
         })
     }
-    let mediaUrl = "";
+    let mediaUrl = ""; 
     if(media){
+        try{
         const uploadResponse = await cloudinary.uploader.upload(media.tempFilePath,{
             resource_type:"auto",
             folder:"CHAT_APP_MEDIA",
@@ -65,5 +67,13 @@ export const sendMessage = catchAsyncError(async(req,res,next)=>{
             ]
         })
         mediaUrl = uploadResponse?.secure_url;
+    }
+     catch(error){
+         console.error("Cloudinary upload error",error);
+         return res.status(500).json({
+            success:false,
+            message:"Failed to upload media. Please try again later."
+         })
+     }
     }
 })
