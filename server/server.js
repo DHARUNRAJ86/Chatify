@@ -1,6 +1,7 @@
 import app from './app.js';
 import {v2 as cloudinary } from 'cloudinary';
-
+import http from 'http';
+import {initSocket} from './utilis/socket.js';
 
 cloudinary.config({
     cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
@@ -8,7 +9,9 @@ cloudinary.config({
     api_secret:process.env.CLOUDINARY_API_SECRET
 })
 
+const server = http.createServer(app);
+initSocket(server);
 
-app.listen(process.env.PORT,()=>{
+server.listen(process.env.PORT,()=>{
     console.log(`Server is running on port ${process.env.PORT} in ${process.env.NODE_ENV} mode`);
 })

@@ -76,4 +76,17 @@ export const sendMessage = catchAsyncError(async(req,res,next)=>{
          })
      }
     }
+
+    const newMessage = await Message.create({
+        senderId,
+        receiverId,
+        text: sanitizedText,
+        media: mediaUrl
+    });
+
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if(receiverSocketId){
+        io.to(receiverSocketId).emit("newMessage",newMessage);
+    }
+    res.status(201).json(newMessage);
 })
