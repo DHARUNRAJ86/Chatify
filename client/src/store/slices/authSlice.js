@@ -1,6 +1,17 @@
-const {createSlice} = require('@reduxjs/toolkit');
+import {createAsyncThunk,createSlice} from '@reduxjs/toolkit';
+import {axiosInstance} from '../../lib/axios.js'
+import { connectSocket } from '../../lib/socket.js';
 
-export const getUser = ()=>{}
+export const getUser = createAsyncThunk('user/me',async(_,thunkAPI)=>{
+        try{
+            const res = await axiosInstance.get('/user/me')
+            connectSocket(res.data.user);
+            return res.data.user;
+        }catch(error){
+            console.log("Error fetching user:",error)
+            return thunkAPI.rejectWithValue(error.response?.data || "Failed to fetch user");
+        }
+})
 
 const authSlice = createSlice({
     name:'auth',
@@ -28,3 +39,7 @@ const authSlice = createSlice({
         })
     }
 })
+
+export const {setOnlineUsers} = authSlice.actions;
+
+export default authSlice.reducer;
