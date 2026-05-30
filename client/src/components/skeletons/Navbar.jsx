@@ -26,6 +26,12 @@ const Navbar =()=>{
                     </Link>
 
                    </div>
+                   {/*Right Actions */}
+                     <div className='flex items-center gap-3'>
+                        {
+                            authUser
+                        }
+                     </div>
                 </div>
 
             </div>
