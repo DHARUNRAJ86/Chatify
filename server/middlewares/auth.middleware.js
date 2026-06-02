@@ -11,7 +11,7 @@ export const isAuthenticated = catchAsyncError(async(req,res,next)=>{
             message:"User is not authenticated. Please sign in."
         })
     }
-    const decoded = jwt.verify(token,process.env.JWT_SECRET_KEY);
+    const decoded = jwt.verify(token,process.env.JWT_SECRET);
 
     if(!decoded){
         return res.status(500).json({

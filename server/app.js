@@ -1,38 +1,46 @@
+// ✅ 1. LOAD ENV VARIABLES FIRST (VERY IMPORTANT)
+import dotenv from "dotenv";
+dotenv.config({ path: "./config/config.env" });
+
+// ✅ 2. IMPORTS
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import dotenv from "dotenv";
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
-import {dbConnection} from './database/db.js'
+import { dbConnection } from './database/db.js';
 import userRouter from './routes/user.routes.js';
 import messageRouter from './routes/message.routes.js';
 
+// ✅ 3. INITIALIZE APP
 const app = express();
 
-dotenv.config({ path: "./config/config.env" });
+
+
+// ✅ 5. MIDDLEWARES
 
 app.use(cors({
-    origin:[process.env.FRONTEND_URL],
-    credentials:true,
-    methods:["GET","POST","PUT","DELETE"]
-}))
+    origin: process.env.FRONTEND_URL,   // ✅ no need array
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"]
+}));
 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(
     fileUpload({
-        useTempFiles:true,
-        tempFileDir:"./temp/"
+        useTempFiles: true,
+        tempFileDir: "./temp/"
     })
-)
+);
 
-app.use("/api/v1/user",userRouter);
-app.use("/api/v1/message",messageRouter);
+// ✅ 6. ROUTES
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/message", messageRouter);
 
+// ✅ 7. DATABASE CONNECTION
 dbConnection();
 
+// ✅ 8. EXPORT
 export default app;
-
-
