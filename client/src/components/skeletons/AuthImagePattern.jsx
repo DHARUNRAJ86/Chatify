@@ -12,6 +12,8 @@ const AuthImagePattern =({title,subtitle})=>{
                          })
                     }
                </div>
+               <h2 className='text-2xl font-bold text-black mb-4'>{title}</h2>
+               <p className='text-gray-700'>{subtitle}</p>
           </div>
      </div>
      </>

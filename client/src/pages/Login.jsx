@@ -96,11 +96,12 @@ const Login = () => {
             </form>
             {/*Footer*/}
             <div className='mt-6 text-center'>
-              <p className='text-sm text-gray-500'></p>
+              <p className='text-sm text-gray-500'>
               Don't have an account?{" "}
               <Link to='/register' className='text-blue-600 hover:underline'>
               Create account
               </Link>
+              </p>
             </div>
         </div>
       </div>
