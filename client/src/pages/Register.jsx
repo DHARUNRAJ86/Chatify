@@ -24,7 +24,7 @@ const Register =()=>{
   <div className='min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-white'>
       <div className='flex flex-col justify-center items-center px-6 py-12'>
         <div className='w-full max-w-md'>
-           {/*Logo and Heading */}
+           {/*Logo and Heading  */}
            <div className='flex flex-col items-center text-center mb-10'>
               <div className='bg-blue-100 p-3 rounded-lg'>
                 <MessageSquare className='text-blue-600 w-6 h-6' />
