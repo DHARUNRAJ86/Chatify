@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react';
 import {useSelector,useDispatch} from 'react-redux';
 import SidebarSkeleton from "./SidebarSkeleton";
-import { getUsers } from "../../store/slices/chatSlice.js";
+import { getUsers,setSelectedUser } from "../../store/slices/chatSlice.js";
 import { Users } from "lucide-react";
 
 const Sidebar =()=>{
@@ -47,7 +47,7 @@ const Sidebar =()=>{
         {
             filteredUsers?.length > 0 && filteredUsers.map(user =>{
                 return(
-                <button key={user._id} onClick={()=>dispatch(setSelectedUser)}
+                <button key={user._id} onClick={()=>dispatch(setSelectedUser(user))}
                 className={`w-full p-3 flex items-center gap-3 transition-colors rounded-md ${
                     selectedUser?._Id === user._id ? "bg-gray-200 ring-gray-200":"hover:bg-gray-200"
                 }`}
