@@ -1,6 +1,6 @@
 import {Users} from 'lucide-react';
 const SidebarSkeleton = () => {
-  const skeletonContacts =Array(8).fill.apply(null);
+  const skeletonContacts =Array(8).fill(0);
   return <>
   <aside className='h-full w-20 lg:w-72 border-r border-gray-200 flex flex-col transition-all duration-200'>
     {/*Header*/}
