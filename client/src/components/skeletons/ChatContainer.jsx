@@ -64,7 +64,9 @@ const ChatContainer = () => {
                         >
                             {/*Avatar */}
                             <div className={`w-10 h-10 rounded-full overflow-hidden border shrink-0 ${isSender ? "order-2 ml-3":"order-1 mr-3"}`}>
-                                <img src={selectedUser?.avatar?.url || "/avatar-holder.avif"} alt="/avatar-holder.avif" 
+                                <img src={isSender ? authUser ?.avatar?.url || "/avatar-holder.avif"
+                                    :selectedUser?.avatar?.url || "/avatar-holder.avif"
+                                } alt="/avatar-holder.avif" 
                                 className='w-full h-full object-cover'
                                 />
                             </div>
