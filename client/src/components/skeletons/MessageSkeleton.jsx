@@ -11,7 +11,7 @@ const MessageSkeleton = () => {
               {/*Message Bubble */}
               <div>
                  <div className='h-4 w-16 bg-gray-300 rounded mb-2 animate-pulse'/>
-                 <div className='w-[200px] h-16 bg-gray-300 rounded-lg animate-pulse'/>
+                 <div className='w- [200px] h-16 bg-gray-300 rounded-lg animate-pulse'/>
               </div>
             </div>
         )
