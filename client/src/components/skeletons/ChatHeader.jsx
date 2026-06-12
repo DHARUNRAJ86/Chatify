@@ -1,5 +1,6 @@
 import {X} from 'lucide-react';
 import {useDispatch,useSelector} from 'react-redux';
+import {setSelectedUser} from '../../store/slices/chatSlice.js'
 
 const ChatHeader = () => {
   const{selectedUser} = useSelector(state=>state.chat);
@@ -23,7 +24,22 @@ const ChatHeader = () => {
             }
         </div>
         {/*Name and status */}
+        <div>
+          <h3 className='font-medium text-base text-black'>
+            {selectedUser?.fullName}
+          </h3>
+          <p className='text-sm text-black'>
+            {
+              onlineUsers.includes(selectedUser?._id) ?"Online":"Offline"
+            }
+          </p>
+        </div>
       </div>
+
+      {/*Close Button */}
+      <button onClick={()=> dispatch(setSelectedUser(null))} className='text-gray-800 hover:text-black transition'>
+        <X className='w-5 h-5'/>
+      </button>
      </div>
    </div>
   </>;
