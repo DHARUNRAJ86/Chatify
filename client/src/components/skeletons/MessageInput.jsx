@@ -15,7 +15,7 @@ const MessageInput = () => {
    
   const handleChange =(e)=>{
     const file =e.target.files[0];
-
+    
     if(!file) return;
     setMedia(file);
     const type = file.type;
@@ -77,7 +77,30 @@ const MessageInput = () => {
      return ()=> socket.off("newMessage",handleNewMessage);
   },[selectedUser._id])
 
-  return <div>Input</div>;
+  return <>
+   <div className='p-4 w-full'>
+    {
+      mediaPreview && (
+        <div className='mb-3 flex items-center gap-2'>
+          <div className='relative'>
+            {
+              mediaType === "image" ?(
+                <img src={mediaPreview} alt='Preview' className='w-20 h-20 object-cover rounded-lg border border-gray-700'/>
+              ):(
+                 <video src={mediaPreview} 
+                 controls 
+                 className='w-32 h-20 object-cover rounded-lg border border-gray-700'/>
+              )
+            }
+            <button onClick={removeMedia} type='button' className='absolute '></button>
+          </div>
+        </div>
+      )
+    }
+   </div>
+  
+  
+  </>
 };
 
 export default MessageInput;
