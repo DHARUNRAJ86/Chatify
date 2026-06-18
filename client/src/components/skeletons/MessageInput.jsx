@@ -2,7 +2,7 @@ import {Image,Send,X,Video} from 'lucide-react';
 import {useState,useRef,useEffect} from 'react';
 import {useDispatch,useSelector} from 'react-redux';
 import {toast} from 'react-toastify';
-import { getSocket } from '../socket';
+import { getSocket } from "../../lib/socket";
 
 const MessageInput = () => {
   const [text,setText] = useState("");
