@@ -114,8 +114,19 @@ const MessageInput = () => {
         onChange={handleMediaChange}/>
 
         <button type='button' onClick={()=> fileInputRef?.current.click()}
-          ></button>
+        className={`hidden sm:flex items-center justify-center w-10 h-10 rounded-full border border-gray-300
+          hover:border-gray-100 transition ${mediaPreview ?"text-emerald-500":"text-gray-400"}`}
+          >
+           <Image size={20}/>
+          </button>
       </div>
+
+       <button type='submit' className='w-10 h-10 flex items-center justify-center rounded-full bg-blue-600
+       text-white hover:bg-blue-700 transition disabled:opacity-50'
+       disabled={!text.trim() && !media}
+       >
+        <Send size={22}/>
+       </button>
     </form>
    </div>
   

@@ -22,6 +22,10 @@ export const getMessages = createAsyncThunk('chat/getMessages',async(userId,thun
     }
 })
 
+export const sendMessage = createAsyncThunk("chat/sendMessage",async(messageData,thunkAPI)=>{
+    
+})
+
 const chatSlice = createSlice({
     name:'chat',
     initialState:{
