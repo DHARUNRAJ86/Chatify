@@ -2,7 +2,7 @@ import {catchAsyncError} from '../middlewares/catchAsyncError.middleware.js'
 import {User} from "../models/user.model.js";
 import {Message} from "../models/message.model.js"
 import { v2 as cloudinary} from 'cloudinary'
-
+import { getReceiverSocketId, io } from "../utilis/socket.js"; 
 
 export const getAllUsers = catchAsyncError(async(req,res,next)=>{
     const user = req.user;

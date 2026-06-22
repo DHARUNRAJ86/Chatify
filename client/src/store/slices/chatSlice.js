@@ -75,6 +75,7 @@ const chatSlice = createSlice({
         .addCase(sendMessage.fulfilled,(state,action)=>{
             state.messages.push(action.payload);
         })
+        
      }
 })
 

@@ -3,6 +3,7 @@ import {useState,useRef,useEffect} from 'react';
 import {useDispatch,useSelector} from 'react-redux';
 import {toast} from 'react-toastify';
 import { getSocket } from "../../lib/socket";
+import {sendMessage} from '../../store/slices/chatSlice';
 
 const MessageInput = () => {
   const [text,setText] = useState("");
@@ -54,7 +55,8 @@ const MessageInput = () => {
     data.append("text",text.trim());
     data.append("media",media);
 
-    // dispatch(sendMessage(data))
+    dispatch(sendMessage(data))
+
     //Reset All
 
     setText("");
