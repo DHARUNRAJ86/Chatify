@@ -49,6 +49,18 @@ export const signup = createAsyncThunk('user/sign-up',async(data,thunkAPI)=>{
      }
 })
 
+export const updateProfile = createAsyncThunk('user/update-profile',async(data,thunkAPI)=>{
+    try{
+        const res = await axiosInstance.put('/user/update-profile',data);
+        toast.success("Profile updated successfully");
+        return res.data;
+    }catch(error){
+        toast.error(error.response.data.message);
+        return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+})
+
+
 const authSlice = createSlice({
     name:'auth',
     initialState:{
@@ -99,6 +111,16 @@ const authSlice = createSlice({
         })
         .addCase(signup.rejected,(state,action)=>{
             state.isSigningUp = false;
+        })
+        .addCase(updateProfile.pending,(state)=>{
+            state.isUpdatingProfile= true;
+        })
+        .addCase(updateProfile.fulfilled,(state,action)=>{
+            state.authUser = action.payload;
+            state.isUpdatingProfile = false;
+        })
+        .addCase(updateProfile.rejected,(state)=>{
+            state.isUpdatingProfile = false;
         })
     }
 })
