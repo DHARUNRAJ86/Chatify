@@ -42,8 +42,16 @@ const Profile = () => {
        <div className='max-w-2xl mx-auto p-4 py-8'>
          <div className='bg-white rounded-xl shadow-md p-6 space-y-8'>
             <div className='text-center'>
-               <h1>Profile</h1>
-               <p>Your Profile information</p>
+               <h1 className='text-2xl font-semibold text-gray-800'>Profile</h1>
+               <p className='mt-2 text-gray-500'>Your Profile information</p>
+            </div>
+            {/*Avatar Upload */}
+            <div className='flex flex-col items-center gap-4'>
+              <div className='relative'>
+                <img src={selectedImage || formData.avatar || "/avatar-holder.avif"} alt="/avatar-holder.avif"
+                className='w-32 h-32 rounded-full object-cover'
+                />
+              </div>
             </div>
          </div>
        </div>
