@@ -1,11 +1,11 @@
 import {Camera,Loader2,Mail,User} from 'lucide-react'
 import {useSelector,useDispatch} from 'react-redux'
 import {useState} from 'react';
-
+import { updateProfile } from "../store/slices/authSlice";
 
 const Profile = () => {
    
-   const [authUser,isUpdatingProfile] = useSelector(state => state.auth);
+   const {authUser,isUpdatingProfile} = useSelector(state => state.auth);
 
    const [selectedImage,setSelectedImage] = useState(null);
 
@@ -49,8 +49,12 @@ const Profile = () => {
             <div className='flex flex-col items-center gap-4'>
               <div className='relative'>
                 <img src={selectedImage || formData.avatar || "/avatar-holder.avif"} alt="/avatar-holder.avif"
-                className='w-32 h-32 rounded-full object-cover'
+                className='w-32 h-32 rounded-full object-cover object-top border-4 border-gray-200'
                 />
+                <label htmlFor="avatar-upload" className={`absolute bottom-0 right-0 bg-gray-800 hover:scale-105
+                  p-2 rounded-full cursor-pointer transition-all duration-200 ${
+                    isUpdatingProfile ? "animate-pulse pointer-events-none":''
+                  }`}></label>
               </div>
             </div>
          </div>
