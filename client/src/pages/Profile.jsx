@@ -54,9 +54,25 @@ const Profile = () => {
                 <label htmlFor="avatar-upload" className={`absolute bottom-0 right-0 bg-gray-800 hover:scale-105
                   p-2 rounded-full cursor-pointer transition-all duration-200 ${
                     isUpdatingProfile ? "animate-pulse pointer-events-none":''
-                  }`}></label>
+                  }`}>
+                    <Camera className='w-5 h-5 text-white'/>
+                    <input type='file' id='avatar-upload' className='hidden' accept='image/*' onChange={handleImageUpload}
+                    disable={isUpdatingProfile}
+                    />
+                  </label>
               </div>
+              <p className='text-sm text-gray-400'>
+                {
+                  isUpdatingProfile ? "Uploading..." :"Click the camera icon to upload your photo."
+                }
+              </p>
             </div>
+               {/* User Information */}
+                 <div className='space-y-6'>
+                    <div className='space-y-1.5'>
+                       <div className='text-sm text-gray-500'></div>
+                    </div>
+                 </div>
          </div>
        </div>
      </div>
