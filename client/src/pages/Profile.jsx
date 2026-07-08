@@ -76,7 +76,18 @@ const Profile = () => {
                        <input type='text' value={formData.fullName} onChange={(e)=>setFormData({...formData,fullName:e.target.value})} 
                        className='px-4 py-2.5 bg-gray-100 rounded-lg border border-gray-300 text-gray-800 w-full focus:outline-none'/>
                     </div>
+                    
+                    <div className='space-y-1.5'>
+                       <div className='text-sm text-gray-500 flex items-center gap-2'>
+                        <Mail className='w-4 h-4'/>Email Address
+                       </div>
+                       <input type='email' value={formData.email} onChange={(e)=>setFormData({...formData,email:e.target.value})} 
+                       className='px-4 py-2.5 bg-gray-100 rounded-lg border border-gray-300 text-gray-800 w-full focus:outline-none'/>
+                    </div>
                  </div>
+
+                 {/* Update Profile Button */}
+                 <button></button>
          </div>
        </div>
      </div>
