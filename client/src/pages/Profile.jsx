@@ -12,7 +12,7 @@ const Profile = () => {
    const [formData,setFormData] =useState({
        fullName:authUser?.fullName,
        email:authUser?.email,
-       avatar:authUser?.avatar.url,
+       avatar:authUser?.avatar?.url,
    })
 
    const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const Profile = () => {
       setFormData({...formData,avatar:file});
      }
    }
-   const updateProfile = ()=>{
+   const handleUpdateProfile = ()=>{
       const data = new FormData();
       data.append("fullName",formData.fullName)
       data.append("email",formData.email)
@@ -57,7 +57,7 @@ const Profile = () => {
                   }`}>
                     <Camera className='w-5 h-5 text-white'/>
                     <input type='file' id='avatar-upload' className='hidden' accept='image/*' onChange={handleImageUpload}
-                    disable={isUpdatingProfile}
+                    disabled={isUpdatingProfile}
                     />
                   </label>
               </div>
@@ -87,7 +87,23 @@ const Profile = () => {
                  </div>
 
                  {/* Update Profile Button */}
-                 <button></button>
+                 <button onClick={handleUpdateProfile} disabled={isUpdatingProfile} 
+                 className='w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-md
+                 transition duration-200 flex justify-center items-center gap-2
+                 '>
+                  {isUpdatingProfile ? (
+                    <>
+                     <Loader2 className='w-5 h-5 animate-spin'/>Loading...
+                    </>
+                  ) :(
+                      "Update Profile"
+                  )}
+                 </button>
+              {/*Account Info */}
+              <div className='mt-6 bg-gray-50 border border-gray-200 rounded-xl p-6'>
+                   <h2></h2>
+              </div>
+
          </div>
        </div>
      </div>
