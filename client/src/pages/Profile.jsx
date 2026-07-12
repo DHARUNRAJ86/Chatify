@@ -101,7 +101,17 @@ const Profile = () => {
                  </button>
               {/*Account Info */}
               <div className='mt-6 bg-gray-50 border border-gray-200 rounded-xl p-6'>
-                   <h2></h2>
+                   <h2 className='text-lg font-medium text-gray-800 mb-4'>Account Information</h2>
+                   <div className='space-y-3 text-sm text-gray-600'>
+                    <div className='flex items-center justify-between py-2 border-b border-gray-200'>
+                      <span>Member Since</span>
+                      <span>{authUser.createdAt?.split("!")[0]}</span>
+                    </div>
+                    <div className='flex items-center justify-between py-2 '>
+                      <span>Account Status</span>
+                      <span className='text-green-600 font-medium'>Active</span>
+                    </div>
+                   </div>
               </div>
 
          </div>
