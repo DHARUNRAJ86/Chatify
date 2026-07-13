@@ -13,8 +13,9 @@ const ChatHeader = () => {
       <div className='flex items-center gap-3'>
         {/*Avatar */}
         <div className='relative w-10 h-10'>
-           <img src={selectedUser?.avatar?.url || "avatar-holder.avif"}
-            alt='/avatar-holder.avif'
+           <img src={selectedUser?.avatar?.url || "/avatar-holder.avif"}
+            alt='Avatar'
+            onError={(e) => { e.target.onerror = null; e.target.src = "/avatar-holder.avif"; }}
             className='w-full h-full object-cover rounded-full'
             />
             {

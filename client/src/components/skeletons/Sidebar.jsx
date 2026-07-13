@@ -54,7 +54,8 @@ const Sidebar =()=>{
                 >
                 {/*Avatar */}
                 <div className='relative mx-auto lg:mx-0'>
-                    <img src={user?.avatar?.url || '/avatar-holder.avif'} alt={'/avatar-holder.avif'}
+                    <img src={user?.avatar?.url || '/avatar-holder.avif'} alt='Avatar'
+                    onError={(e) => { e.target.onerror = null; e.target.src = '/avatar-holder.avif'; }}
                     className='w-12 h-12 object-cover rounded-full '
                     />
                     {

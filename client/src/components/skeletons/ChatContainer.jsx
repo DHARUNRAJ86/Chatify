@@ -66,7 +66,8 @@ const ChatContainer = () => {
                             <div className={`w-10 h-10 rounded-full overflow-hidden border shrink-0 ${isSender ? "order-2 ml-3":"order-1 mr-3"}`}>
                                 <img src={isSender ? authUser ?.avatar?.url || "/avatar-holder.avif"
                                     :selectedUser?.avatar?.url || "/avatar-holder.avif"
-                                } alt="/avatar-holder.avif" 
+                                } alt="Avatar" 
+                                onError={(e) => { e.target.onerror = null; e.target.src = "/avatar-holder.avif"; }}
                                 className='w-full h-full object-cover'
                                 />
                             </div>

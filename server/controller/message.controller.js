@@ -1,7 +1,8 @@
 import {catchAsyncError} from '../middlewares/catchAsyncError.middleware.js'
 import {User} from "../models/user.model.js";
 import {Message} from "../models/message.model.js"
-import { v2 as cloudinary} from 'cloudinary'
+import path from 'path';
+import fs from 'fs';
 import { getReceiverSocketId, io } from "../utilis/socket.js"; 
 
 export const getAllUsers = catchAsyncError(async(req,res,next)=>{
@@ -57,24 +58,22 @@ export const sendMessage = catchAsyncError(async(req,res,next)=>{
     let mediaUrl = ""; 
     if(media){
         try{
-        const uploadResponse = await cloudinary.uploader.upload(media.tempFilePath,{
-            resource_type:"auto",
-            folder:"CHAT_APP_MEDIA",
-            transformation:[
-                {width:1000,height:1000,crop:"limit"},
-                {quality:"auto"},
-                {fetch_format:"auto"}
-            ]
-        })
-        mediaUrl = uploadResponse?.secure_url;
-    }
-     catch(error){
-         console.error("Cloudinary upload error",error);
-         return res.status(500).json({
-            success:false,
-            message:"Failed to upload media. Please try again later."
-         })
-     }
+            const uploadDir = path.join(process.cwd(), 'uploads', 'media');
+            if (!fs.existsSync(uploadDir)) {
+                fs.mkdirSync(uploadDir, { recursive: true });
+            }
+            const fileName = `${Date.now()}-${media.name}`;
+            const uploadPath = path.join(uploadDir, fileName);
+            await media.mv(uploadPath);
+            mediaUrl = `http://localhost:5000/uploads/media/${fileName}`;
+        }
+        catch(error){
+            console.error("Error uploading media locally",error);
+            return res.status(500).json({
+                success:false,
+                message:"Failed to upload media. Please try again later."
+            })
+        }
     }
 
     const newMessage = await Message.create({

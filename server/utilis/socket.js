@@ -7,7 +7,7 @@ let io;
 export function initSocket(server){
     io = new Server(server,{
         cors:{
-            origin:[process.env.FRONTEND_URL],
+            origin:[process.env.FRONTEND_URL, "http://localhost:5173", "http://localhost:5174"],
         }
     })
     io.on("connection",(socket)=>{

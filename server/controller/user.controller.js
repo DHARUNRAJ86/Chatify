@@ -2,9 +2,8 @@ import {catchAsyncError} from '../middlewares/catchAsyncError.middleware.js'
 import {User} from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
 import {generateToken} from '../utilis/jwtToken.js'
-import {v2 as cloudinary} from 'cloudinary'
-
-
+import path from 'path';
+import fs from 'fs';
 export const signup = catchAsyncError(async(req,res,next)=>{
 
     const {fullName,email,password} = req.body;
@@ -118,24 +117,30 @@ if (!trimmedName || !trimmedEmail) {
     });
 }
     const avatar = req?.files?.avatar;
-    let cloudinaryResponse  = {};
-
+    let avatarUrl = "";
     if(avatar){
         try{
-            const oldAvatarPublicId = req.user?.avatar?.public_id;
-            if(oldAvatarPublicId && oldAvatarPublicId.trim().length > 0){
-                await cloudinary.uploader.destroy(oldAvatarPublicId);  
+            const uploadDir = path.join(process.cwd(), 'uploads', 'avatars');
+            if (!fs.existsSync(uploadDir)) {
+                fs.mkdirSync(uploadDir, { recursive: true });
             }
-            cloudinaryResponse = await cloudinary.uploader.upload(avatar.tempFilePath,{
-                folder:"CHAT_APP_USERS_AVATARS",
-                transformation:[
-                    {width:300,height:300,crop:"limit"},
-                    {quality:"auto"},
-                    {fetch_format:"auto"},
-                ]
-            })
+            
+            // Delete old avatar if it exists (assuming it was locally stored)
+            const oldAvatarUrl = req.user?.avatar?.url;
+            if(oldAvatarUrl && oldAvatarUrl.includes('/uploads/avatars/')){
+                const oldAvatarPath = path.join(process.cwd(), oldAvatarUrl.split(process.env.FRONTEND_URL)[1] || oldAvatarUrl.replace('http://localhost:5000', '')); // basic extraction
+                if (fs.existsSync(oldAvatarPath)) {
+                    fs.unlinkSync(oldAvatarPath);
+                }
+            }
+
+            const fileName = `${Date.now()}-${avatar.name}`;
+            const uploadPath = path.join(uploadDir, fileName);
+            await avatar.mv(uploadPath);
+            avatarUrl = `http://localhost:5000/uploads/avatars/${fileName}`;
+            
         }catch(error){
-            console.error("Error uploading avatar to Cloudinary:",error);
+            console.error("Error uploading avatar locally:",error);
             return res.status(500).json({
                 success:false,
                 message:"Failed to upload avatar. Please try again later."
@@ -147,10 +152,10 @@ if (!trimmedName || !trimmedEmail) {
         fullName: trimmedName,
          email: trimmedEmail,
     }
-    if(avatar && cloudinaryResponse.public_id && cloudinaryResponse.secure_url){
+    if(avatarUrl){
         data.avatar ={
-            public_id:cloudinaryResponse.public_id,
-            url:cloudinaryResponse.secure_url,
+            public_id: "",
+            url: avatarUrl,
         }
     }
 

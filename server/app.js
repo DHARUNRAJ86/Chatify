@@ -19,7 +19,7 @@ const app = express();
 // ✅ 5. MIDDLEWARES
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL,   // ✅ no need array
+    origin: [process.env.FRONTEND_URL, "http://localhost:5173", "http://localhost:5174"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"]
 }));
@@ -34,6 +34,9 @@ app.use(
         tempFileDir: "./temp/"
     })
 );
+
+// ✅ Serve static files
+app.use("/uploads", express.static("uploads"));
 
 // ✅ 6. ROUTES
 app.use("/api/v1/user", userRouter);
