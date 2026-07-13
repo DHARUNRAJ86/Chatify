@@ -105,7 +105,7 @@ const Profile = () => {
                    <div className='space-y-3 text-sm text-gray-600'>
                     <div className='flex items-center justify-between py-2 border-b border-gray-200'>
                       <span>Member Since</span>
-                      <span>{authUser.createdAt?.split("!")[0]}</span>
+                      <span>{authUser.createdAt?.split("T")[0]}</span>
                     </div>
                     <div className='flex items-center justify-between py-2 '>
                       <span>Account Status</span>
